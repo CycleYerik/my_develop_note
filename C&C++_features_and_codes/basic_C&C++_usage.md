@@ -642,6 +642,37 @@ vector<vector<int>> grid(n, vector<int>(m, 0));
 grid.push_back({1, 2, 3}); // 添加一行
 grid[0].push_back(4); // 在第一行添加一个元素
 
+int a[6]={1,2,3,4,5,6};
+vector<int> b(a,a+4);
+for(vector<int>::iterator it=b.begin();it!=b.end();it++)
+    cout<<*it<<" ";
+
+
+sort(a.begin(),a.end()); //对a中的从a.begin()（包括它）到a.end()（不包括它）的元素进行从小到大排列
+reverse(a.begin(),a.end()); //对a中的从a.begin()（包括它）到a.end()（不包括它）的元素倒置，但不排列，如a中元素为1,3,2,4,倒置后为4,2,3,1
+copy(a.begin(),a.end(),b.begin()+1); //把a中的从a.begin()（包括它）到a.end()（不包括它）的元素复制到b中，从b.begin()+1的位置（包括它）开        始复制，覆盖掉原有元素
+find(a.begin(),a.end(),10); //在a中的从a.begin()（包括它）到a.end()（不包括它）的元素中查找10，若存在返回其在向量中的位置
+
+a.assign(b.begin(), b.begin()+3); //b为向量，将b的0~2个元素构成的向量赋给a
+a.assign(4,2); //是a只含4个元素，且每个元素为2
+a.back(); //返回a的最后一个元素
+a.front(); //返回a的第一个元素
+a[i]; //返回a的第i个元素，当且仅当a[i]存在2013-12-07
+a.clear(); //清空a中的元素
+a.empty(); //判断a是否为空，空则返回ture,不空则返回false
+a.pop_back(); //删除a向量的最后一个元素
+a.erase(a.begin()+1,a.begin()+3); //删除a中第1个（从第0个算起）到第2个元素，也就是说删除的元素从a.begin()+1算起（包括它）一直到a.begin()+         3（不包括它）
+a.push_back(5); //在a的最后一个向量后插入一个元素，其值为5
+a.insert(a.begin()+1,5); //在a的第1个元素（从第0个算起）的位置插入数值5，如a为1,2,3,4，插入元素后为1,5,2,3,4
+a.insert(a.begin()+1,3,5); //在a的第1个元素（从第0个算起）的位置插入3个数，其值都为5
+a.insert(a.begin()+1,b+3,b+6); //b为数组，在a的第1个元素（从第0个算起）的位置插入b的第3个元素到第5个元素（不包括b+6），如b为1,2,3,4,5,9,8         ，插入元素后为1,4,5,9,2,3,4,5,9,8
+a.size(); //返回a中元素的个数；
+a.capacity(); //返回a在内存中总共可以容纳的元素个数
+a.resize(10); //将a的现有元素个数调至10个，多则删，少则补，其值随机
+a.resize(10,2); //将a的现有元素个数调至10个，多则删，少则补，其值为2
+a.reserve(100); //将a的容量（capacity）扩充至100，也就是说现在测试a.capacity();的时候返回值是100.这种操作只有在需要给a添加大量数据的时候才         显得有意义，因为这将避免内存多次容量扩充操作（当a的容量不足时电脑会自动扩容，当然这必然降低性能） 
+a.swap(b); //b为向量，将a中的元素和b中的元素进行整体性交换
+a==b; //b为向量，向量的比较操作还有!=,>=,<=,>,<
 
 ```
 
@@ -651,6 +682,24 @@ pair<int,double> graph;
 pair<int, double> p1(1, 2.5); // 创建一个 pair 对象
 graph.first = 1;
 graph.second = 2.5; // 访问 pair 的元素
+
+
+#include<iostream>
+#include<string>
+#include <map>
+using namespace std;
+int main()
+{
+    map<string,int> mp;
+    mp.insert (make pair("heihei",5));
+    mp.insert(pair<string,int>("haha",10));
+    for(map<string,int>::iterator it=mp.begin();it!= mp.end();it++)
+    {
+        cout << it->first <<""<< it->second << endl;
+    }
+    return 0;
+}
+
 
 ```
 
@@ -998,6 +1047,79 @@ int temp2 = stoi("456"); // 将字符串转换为整数
 reverse(s.begin(), s.end()); // 反转字符串
 
 ```
+
+##### 一、创建与初始化 (Creation & Initialization)
+
+| 用法 | 描述 |
+| :--- | :--- |
+| `string s1;` | 创建一个空字符串。 |
+| `string s2 = "hello";` | 使用字符串字面值初始化。 |
+| `string s3("hello");` | 同上，构造函数形式。 |
+| `string s4(5, 'c');` | 创建一个包含5个'c'字符的字符串 ("ccccc")。 |
+| `string s5 = s2;` | 拷贝构造，s5是s2的副本。 |
+| `string s6(s2, 1, 3);` | 从s2的索引1开始，拷贝3个字符 ("ell")。 |
+
+##### 二、容量与大小 (Capacity & Size)
+
+| 函数 | 描述 | 示例 |
+| :--- | :--- | :--- |
+| `s.length()` / `s.size()` | 返回字符串中的字符数。两者功能相同。 | `int len = s.length();` |
+| `s.empty()` | 检查字符串是否为空。 | `if (s.empty()) { ... }` |
+| `s.capacity()` | 返回当前为字符串分配的存储空间大小。 | `int cap = s.capacity();` |
+| `s.resize(n)` | 改变字符串大小为n。如果n小于原大小，则截断；如果大于，则用空字符填充。 | `s.resize(10);` |
+| `s.clear()` | 清空字符串内容，使其变为空字符串。 | `s.clear();` |
+
+##### 三、访问与迭代 (Access & Iteration)
+
+| 用法 | 描述 | 示例 |
+| :--- | :--- | :--- |
+| `s[i]` | 访问索引为 `i` 的字符（不进行边界检查）。 | `char c = s[0];` |
+| `s.at(i)` | 访问索引为 `i` 的字符（进行边界检查，越界会抛出`out_of_range`异常）。 | `char c = s.at(0);` |
+| `s.front()` | 返回第一个字符的引用。 | `char& first = s.front();` |
+| `s.back()` | 返回最后一个字符的引用。 | `char& last = s.back();` |
+| `for(char c : s)` | C++11 范围for循环，用于遍历字符串。 | `for(char c : "hello") { cout << c; }` |
+| `s.begin()`, `s.end()` | 返回指向字符串首尾的迭代器，常用于`<algorithm>`库。 | `reverse(s.begin(), s.end());` |
+
+##### 四、修改操作 (Modification)
+
+###### 1. 添加 (Appending)
+| 函数 | 描述 | 示例 |
+| :--- | :--- | :--- |
+| `s.push_back(c)` | 在字符串末尾添加一个字符。 | `s.push_back('!');` |
+| `s += other_s` | 将另一个字符串 `other_s` 拼接在末尾。 | `s += " world";` |
+| `s.append(other_s)` | 功能同 `+=`，但有更多重载形式。 | `s.append(" world");` |
+
+###### 2. 插入 (Inserting)
+| 函数 | 描述 | 示例 |
+| :--- | :--- | :--- |
+| `s.insert(pos, other_s)` | 在索引 `pos` 处插入字符串 `other_s`。 | `s.insert(5, ", cruel");` |
+| `s.insert(pos, n, c)` | 在索引 `pos` 处插入 `n` 个字符 `c`。 | `s.insert(0, 3, '*');` |
+
+###### 3. 删除 (Erasing)
+| 函数 | 描述 | 示例 |
+| :--- | :--- | :--- |
+| `s.erase(pos, n)` | 从索引 `pos` 开始删除 `n` 个字符。 | `s.erase(0, 6);` |
+| `s.pop_back()` | 删除字符串的最后一个字符。 | `s.pop_back();` |
+
+###### 4. 替换 (Replacing)
+| 函数 | 描述 | 示例 |
+| :--- | :--- | :--- |
+| `s.replace(pos, n, other_s)` | 将从`pos`开始的`n`个字符替换为`other_s`。 | `s.replace(0, 5, "Hi");` |
+
+##### 五、查找与子串 (Searching & Substrings)
+
+**关键值**: `string::npos` 是一个特殊值，当查找失败时函数会返回该值。
+
+| 函数 | 描述 | 示例 |
+| :--- | :--- | :--- |
+| `s.substr(pos, n)` | 返回一个从`pos`开始，长度为`n`的新子字符串。 | `string sub = s.substr(7, 5);` |
+| `s.find(str)` | 从头开始查找`str`首次出现的位置。 | `size_t pos = s.find("world");` |
+| `s.rfind(str)` | 从尾部开始查找`str`首次出现的位置。 | `size_t pos = s.rfind("l");` |
+| `s.find_first_of(chars)` | 查找`chars`中**任意一个字符**首次出现的位置。 | `size_t pos = s.find_first_of("aeiou");` |
+| `s.find_last_of(chars)` | 查找`chars`中**任意一个字符**最后一次出现的位置。 | `size_t pos = s.find_last_of("l");` |
+| `s.find_first_not_of(chars)`| 查找**第一个不属于**`chars`中任意字符的位置。 | `s.find_first_not_of(" \t");` |
+| `s.find_last_not_of(chars)` | 查找**最后一个不属于**`chars`中任意字符的位置。 | `s.find_last_not_of(" \t");` |
+
 #### 地址、指针、引用相关的处理和使用
 
 **引用**
